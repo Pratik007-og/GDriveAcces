@@ -18,7 +18,7 @@ FOLDER_ID = "13mJ8zPtU3uvNTV0yhIfSz-0Sfh0IMaMl"
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/drive.readonly']
 
-def get_folders(service,folder_id):
+def get_files(service,folder_id):
     results = service.files().list(
         q="mimeType='text/csv' and parents in '"+folder_id+"' and trashed = false",
         fields="nextPageToken, files(id, name)",pageSize=10).execute()
@@ -95,9 +95,6 @@ def countFiles(service,folder_id):
     return count
 
 def main():
-    """Shows basic usage of the Drive v3 API.
-    Prints the names and ids of the first 10 files the user has access to.
-    """
     creds = None
     # The file token.json stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
@@ -119,7 +116,7 @@ def main():
     service = build('drive', 'v3', credentials=creds)
 
     #Print all files and folders in current directory
-    get_folders(service, FOLDER_ID)
+    get_files(service, FOLDER_ID)
 
     #Get number of files present in the folder
     file_count = countFiles(service,FOLDER_ID)
